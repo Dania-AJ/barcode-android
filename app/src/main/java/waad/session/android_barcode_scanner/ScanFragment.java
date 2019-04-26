@@ -16,8 +16,8 @@ public class ScanFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // TODO(2) : use forSupportFragment or forFragment method to use fragments instead of activity
-
-         integrator.setDesiredBarcodeFormats(IntentIntegrator.ONE_D_CODE_TYPES);
+        IntentIntegrator integrator = new IntentIntegrator(this.getActivity()).forSupportFragment(this);
+        integrator.setDesiredBarcodeFormats(IntentIntegrator.ONE_D_CODE_TYPES);
         integrator.setPrompt(this.getString(R.string.scan_bar_code));
         integrator.setResultDisplayDuration(0); // milliseconds to display result on screen after scan
         integrator.setCameraId(0);  // Use a specific camera of the device
@@ -36,7 +36,8 @@ public class ScanFragment extends Fragment {
             codeContent = scanningResult.getContents();
             codeFormat = scanningResult.getFormatName();
             // TODO(3) : send received data
-         }else{
+            parentActivity.scanResultData(codeFormat,codeContent);
+        }else{
             // send exception
             parentActivity.scanResultData(new NoScanResultException(noResultErrorMsg));
         }

@@ -24,12 +24,19 @@ public class HomeActivity extends ActionBarActivity implements ScanResultReceive
 
     public void scanNow(View view){
         //TODO(1) : use FragmentManager & FragmentTransaction to add fragment ( scan_fragment )
-     }
+              FragmentManager fragmentManager = getSupportFragmentManager();
+              FragmentTransaction fragmentTransaction=fragmentManager.beginTransaction();
+              ScanFragment scanFragment =new ScanFragment();
+              fragmentTransaction.add(R.id.scan_fragment,scanFragment);
+              fragmentTransaction.commit();
+    }
 
     @Override
     public void scanResultData(String codeFormat, String codeContent){
         // TODO(4) : set result to contentTxt for dislplay result on screen
-     }
+       formatTxt.setText(codeFormat);
+       contentTxt.setText(codeContent);
+    }
 
     @Override
     public void scanResultData(NoScanResultException noScanData) {
